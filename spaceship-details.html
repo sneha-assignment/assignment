@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Watto's Space Emporium</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+</head>
+<body>
+ <header>
+    <nav id="header-nav" class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="index.html" class="pull-left visible-md visible-lg">
+                    <div id="logo-img" alt="Logo image"></div>
+                </a>
+                <div class="navbar-brand">
+                    <a href="index.html"><h1>Watto's Space Emporium</h1></a>
+                    <p>
+                        <span>Best Ships for Great Prices</span>
+                    </p>
+                </div>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsable-nav" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="collapsable-nav" class="collapse navbar-collapse">
+                <ul id="nav-list" class="nav navbar-nav navbar-right">
+                    <li class="visible-xs">
+                        <a href="index.html">
+                            <span class="glyphicon glyphicon-home"></span> Home</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="item-list.html">
+                            <span class="glyphicon glyphicon-plane"></span><br class="hidden-xs"> Ships</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-info-sign"></span><br class="hidden-xs"> About</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-certificate"></span><br class="hidden-xs"> Awards</a>
+                    </li>
+                    <li id="phone" class="hidden-xs">
+                        <a href="tel:123-3456-78901">
+                            <span>123-3456-78901</span></a><div>* We Offer Test Drives</div>
+                    </li>
+                </ul><!-- #nav-list -->
+            </div><!-- .collapse .navbar-collapse -->
+        </div>
+    </nav>
+</header>
+
+
+<div id="call-btn" class="visible-xs">
+    <a class="btn" href="tel:123-3456-78901">
+        <span class="glyphicon glyphicon-earphone"></span>
+        123-3456-78901
+    </a>
+</div>
+<div id="xs-deliver" class="text-center visible-xs">* We Offer Test Drives</div>
+
+<!-- Main Content -->
+<div id="main-content" class="container">
+    <section class="row" id="spaceshipDetails">
+        <div class="col-xs-12" id="spaceshipName"></div>
+       <div class="col-xs-12 col-md-6" id="spaceshipImage">
+
+       </div>
+        <div class="col-xs-12 col-md-6" id="spaceshipSpecs">
+         <div><a href="#">
+          <button type="button" id="buy">Buy Now</button></a></div>      
+
+        </div>
+    </section>
+</div> <!--End of Main Content-->
+
+<footer class="panel-footer">
+    <div class="container">
+        <div class="row">
+            <section id="hours" class="col-sm-4">
+                <span>Hours:</span><br>
+                Sun-Thurs: 8:00:15am - 10:00:15pm<br>
+                Fri: 9:15:00am - 2:30:15pm<br>
+                Saturday Closed
+                <hr class="visible-xs">
+            </section>
+            <section id="address" class="col-sm-4">
+                <span>Address:</span><br>
+                71.62 Light years from the Milky way <br>
+                Star Wars Galaxy
+                <hr class="visible-xs">
+            </section>
+            <section id="testimonials" class="col-sm-4">
+                <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat ut velit nec luctus. Nulla maximus sem turpis, eget vulputate turpis placerat at. Duis sollicitudin tellus nec eleifend faucibus. Aliquam et felis ac nunc iaculis ultrices. Ut aliquam nunc ut lobortis hendrerit"</p>
+                <p>"Duis sollicitudin tellus nec eleifend faucibus. Aliquam et felis ac nunc iaculis ultrices. Ut aliquam nunc ut lobortis hendrerit. Duis in lectus tellus. Suspendisse potenti."</p>
+            </section>
+        </div>
+        <div class="text-center">&copy; Copyright Watto's Space Emporium 2017</div>
+    </div>
+</footer>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://demo7475333.mockable.io/spaceships',
+            type: "GET",
+            dataType: "json",
+            async: true,
+            success: function(msg)  {
+                var ships = msg.products;
+                var url = window.location.href;
+                var shipno = parseInt(url.split('=')[1]) ;
+                count = shipno +1;
+                
+                $('#spaceshipName').append('<p>'+ships[shipno].name+'</p>');
+                $('#spaceshipImage').append('<img class="col-xs-12" src="images/image'+count+'.jpg" ' +
+                    'alt="'+ships[shipno].name+'">');
+
+                
+                $('#spaceshipSpecs').append('<p>MGLT: '+ships[shipno].techspecs.MGLT+'</p>'+
+                    '<p>Length: '+ships[shipno].techspecs.length+'</p>'+
+                    '<p>Max Accel: '+ships[shipno].techspecs.maxaccel+'</p>'+
+                    '<p>Sensor: '+ships[shipno].techspecs.sensor+'</p>'+
+                    '<p>Targeting: '+ships[shipno].techspecs.targeting+'</p>');
+            },
+            error: function()  {
+                console.log("Error reading JSON");
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
